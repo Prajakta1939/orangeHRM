@@ -1,7 +1,7 @@
-// src/main/Tests/login_HRM.ts
+
 
 import { NightwatchBrowser } from 'nightwatch';
-import LoginPage from '../main/Pages/LoginPage.ts';
+import {LoginPage} from './Verify_orangeHRM_Login_Functionality/src/main/Pages/LoginPage.ts';
 export default {
   '@tags': ['login'],
   'Login Test': (browser: NightwatchBrowser) => {
@@ -11,16 +11,16 @@ export default {
 
     browser.perform((done) => {
       require('csv-parser')
-        .fromFile('./data/loginData.csv')
-        .on('data', (data) => {
+        .fromFile('./Data/loginData.csv')
+        .on('data', (data: { username: any; password: any; }) => {
           const { username, password } = data;
           loginPage.login(username, password);
 
-          browser.expect.element('selector-for-logout-button').to.be.present; // Replace with actual selector
+          browser.expect.element('Dashboard').to.be.present; 
 
-          // You can add more assertions here if needed
+        
 
-          browser.url('https://opensource-demo.orangehrmlive.com/'); // Go back to the login page
+          browser.url('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login'); // Go back to the login page
         })
         .on('end', () => {
           done();
